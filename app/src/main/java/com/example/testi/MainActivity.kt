@@ -11,6 +11,9 @@ import android.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
 
+    private val scanFragment = ScanFragment()
+    private val testFragment = TestFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,7 +21,11 @@ class MainActivity : AppCompatActivity() {
         // Set custom toolbar as app bar
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        // menu item click listeners --> activity/fragment opens
+
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, scanFragment)
+            .commit()
 
     }
 
@@ -35,7 +42,19 @@ class MainActivity : AppCompatActivity() {
                 this.startActivity(Intent(this, NewItem::class.java))
                 return true
             }
-            R.id.menu_scan -> Toast.makeText(this, "new item", Toast.LENGTH_SHORT).show()
+            R.id.menu_scan -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, scanFragment)
+                    .addToBackStack(null)
+                    .commit()
+        }
+
+            R.id.menu_main -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, testFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
