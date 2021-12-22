@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toolbar
 
-
 class MainActivity : AppCompatActivity() {
 
     private val scanFragment = ScanFragment()
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, scanFragment)
+            .replace(R.id.fragmentContainer, testFragment)
             .commit()
 
     }
@@ -47,6 +46,8 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.fragmentContainer, scanFragment)
                     .addToBackStack(null)
                     .commit()
+
+
         }
 
             R.id.menu_main -> {

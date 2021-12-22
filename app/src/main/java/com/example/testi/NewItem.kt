@@ -21,20 +21,6 @@ class NewItem : AppCompatActivity() {
 
         // Set custom toolbar as app bar
         setSupportActionBar(findViewById(R.id.toolbar))
-
-        // Alternative to "onActivityResult", because that is "deprecated"
-        mQrResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if(it.resultCode == Activity.RESULT_OK) {
-                val result = IntentIntegrator.parseActivityResult(it.resultCode, it.data)
-
-                if(result.contents != null) {
-                    // Do something with the contents (this is usually a URL)
-                    Toast.makeText(this, result.contents, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        startScanner()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_bar, menu)
@@ -53,14 +39,5 @@ class NewItem : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    // Start the QR Scanner
-    private fun startScanner() {
-        val scanner = IntentIntegrator(this)
-        // QR Code Format
-        scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-        // Set Text Prompt at Bottom of QR code Scanner Activity
-        scanner.setPrompt("QR Code Scanner Prompt Text")
-        // Start Scanner (don't use initiateScan() unless if you want to use OnActivityResult)
-        mQrResultLauncher.launch(scanner.createScanIntent())
-    }
+
 }
