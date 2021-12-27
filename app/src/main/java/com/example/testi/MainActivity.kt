@@ -1,5 +1,6 @@
 package com.example.testi
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,16 +8,19 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toolbar
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
+    val fileName = "testfile"
     private val scanFragment = ScanFragment()
     private val testFragment = TestFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val fileName = getTestFileName()
+        val output : FileOutputStream = openFileOutput(fileName, Context.MODE_APPEND)!!
         // Set custom toolbar as app bar
         setSupportActionBar(findViewById(R.id.toolbar))
 
@@ -28,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    internal fun getTestFileName(): String {
+        return fileName
+    }
     // inflate menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_bar, menu)

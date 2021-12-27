@@ -1,6 +1,7 @@
 package com.example.testi
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.lang.Exception
 
 
 class ScanFragment : Fragment(R.layout.fragment_scan) {
@@ -37,6 +43,7 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
 
 
     fun createScanner() {
+
         mQrResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if(it.resultCode == Activity.RESULT_OK) {
                 val result = IntentIntegrator.parseActivityResult(it.resultCode, it.data)
@@ -45,6 +52,19 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
                     // Do something with the contents (this is usually a URL)
                     Toast.makeText(activity, result.contents, Toast.LENGTH_SHORT).show()
                     scanner?.insert(result.contents)
+
+                    try {
+                        val fileName = (activity as MainActivity).getTestFileName()
+                        val output : FileOutputStream = activity?.application?.applicationContext?.openFileOutput(fileName, Context.MODE_APPEND)!!
+                        output.write(result.contents.toByteArray())
+                    }catch (e : Exception) {
+
+                    }finally {
+
+                    }
+
+
+
                 }
             }
         }

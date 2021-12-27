@@ -23,6 +23,7 @@ class NewItem : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_item)
 
+
         // Set custom toolbar as app bar
         setSupportActionBar(findViewById(R.id.toolbar))
     }

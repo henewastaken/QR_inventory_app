@@ -6,6 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import java.io.File
+import java.io.FileInputStream
 import java.io.InputStream
 import java.lang.Exception
 import java.nio.charset.Charset
@@ -51,7 +52,8 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
         try {
 
-            val inputStream: InputStream = resources.openRawResource(R.raw.testtextfile)
+            val fileName = (activity as MainActivity).getTestFileName()
+            val inputStream: InputStream = FileInputStream(fileName)
             val text = inputStream.bufferedReader().use { it.readText() }
             Log.d("on_juttuset", text)
             val updatedText = view?.findViewById<TextView>(R.id.testFragmentText)
