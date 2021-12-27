@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // Create the file
         val fileName = getTestFileName()
         val output : FileOutputStream = openFileOutput(fileName, Context.MODE_APPEND)!!
         // Set custom toolbar as app bar
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // Function returns the file name. Can be used in fragemnts also
     internal fun getTestFileName(): String {
         return fileName
     }

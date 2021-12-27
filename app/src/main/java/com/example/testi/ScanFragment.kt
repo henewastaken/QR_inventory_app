@@ -54,9 +54,11 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
                     scanner?.insert(result.contents)
 
                     try {
+                        // Get filename from Main Activity
                         val fileName = (activity as MainActivity).getTestFileName()
+                        // Create outputsream and write scanned to file
                         val output : FileOutputStream = activity?.application?.applicationContext?.openFileOutput(fileName, Context.MODE_APPEND)!!
-                        output.write(result.contents.toByteArray())
+                        output.write((result.contents + "/n").toByteArray())
                     }catch (e : Exception) {
 
                     }finally {

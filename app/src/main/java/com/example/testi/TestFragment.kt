@@ -46,17 +46,21 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        Log.d("on_juttuset","save isntance")
+        Log.d("on_juttuset","save instance")
     }
     fun readCsvFile() {
         Toast.makeText(activity, "tullaanko edes tänne?", Toast.LENGTH_SHORT).show()
 
         try {
 
+            // Get the file name form MainActivity
             val fileName = (activity as MainActivity).getTestFileName()
+            // Create inputsteam and open file
             val inputStream  =  activity?.application?.applicationContext?.openFileInput(fileName)
+            // Read text to variable
             val text = inputStream?.bufferedReader().use { it?.readText() }
             text?.let { Log.d("on_juttuset", it) }
+            // Set text to texView
             val updatedText = view?.findViewById<TextView>(R.id.testFragmentText)
             updatedText?.setText(text)
         } catch (e : Exception) {
