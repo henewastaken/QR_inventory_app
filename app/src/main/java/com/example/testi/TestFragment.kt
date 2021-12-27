@@ -21,7 +21,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
     override fun onStart() {
         super.onStart()
-        readCsvFile()
+
         //Toast.makeText(activity, scanner?.getItems()?.size.toString(), Toast.LENGTH_SHORT).show()
         if (scanner?.getItems()?.isEmpty() == false) {
             //Toast.makeText(activity, scanner?.getItems()?.firstElement(), Toast.LENGTH_SHORT).show()
@@ -38,6 +38,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
     override fun onResume() {
         super.onResume()
+        readCsvFile()
         Log.d("on_juttuset","on resume, " + scanner?.getItems()?.size.toString())
         //Toast.makeText(activity, scanner?.getItems()?.firstElement(), Toast.LENGTH_SHORT).show()
 
@@ -53,13 +54,13 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         try {
 
             val fileName = (activity as MainActivity).getTestFileName()
-            val inputStream: InputStream = FileInputStream(fileName)
-            val text = inputStream.bufferedReader().use { it.readText() }
-            Log.d("on_juttuset", text)
+            val inputStream  =  activity?.application?.applicationContext?.openFileInput(fileName)
+            val text = inputStream?.bufferedReader().use { it?.readText() }
+            text?.let { Log.d("on_juttuset", it) }
             val updatedText = view?.findViewById<TextView>(R.id.testFragmentText)
             updatedText?.setText(text)
         } catch (e : Exception) {
-            Log.d("on_juttuset", e.toString())
+            Log.d("on_juttuset", "virhe " + e.toString())
         } finally {
 
         }
