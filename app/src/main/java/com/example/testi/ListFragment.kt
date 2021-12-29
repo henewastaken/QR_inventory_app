@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_list.view.*
 
 /*
  Main menu fragment
@@ -16,16 +15,16 @@ import kotlinx.android.synthetic.main.fragment_list.view.*
  */
 class ListFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
 
         view.floatingActionButton.setOnClickListener{
-            findNavController().navigate(R.id.action_testFragment_to_scanFragment)
+            findNavController().navigate(R.id.action_listFragment_to_insertFragment)
         }
 
 
@@ -57,8 +56,12 @@ class ListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_scan) {
-            findNavController().navigate(R.id.action_testFragment_to_scanFragment)
+            findNavController().navigate(R.id.action_listFragment_to_scanFragment)
         }
+        if (item.itemId == R.id.menu_new_item) {
+            findNavController().navigate(R.id.action_listFragment_to_insertFragment)
+        }
+
 
         return super.onOptionsItemSelected(item)
     }

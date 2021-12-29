@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/testFragment">
+    app:startDestination="@id/scanFragment">
 
     <fragment
-        android:id="@+id/testFragment"
+        android:id="@+id/listFragment"
         android:name="com.example.testi.ListFragment"
         android:label="Main screen"
         tools:layout="@layout/fragment_list">
         <action
-            android:id="@+id/action_testFragment_to_scanFragment"
+            android:id="@+id/action_listFragment_to_scanFragment"
             app:destination="@id/scanFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_insertFragment"
+            app:destination="@id/insertFragment" />
     </fragment>
 
     <fragment
@@ -21,8 +24,23 @@
         android:label="Scan"
         tools:layout="@layout/fragment_list" >
         <action
-            android:id="@+id/action_scanFragment_to_testFragment"
-            app:destination="@id/testFragment" />
+            android:id="@+id/action_scanFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_insertFragment"
+            app:destination="@id/insertFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/insertFragment"
+        android:name="com.example.testi.InsertFragment"
+        android:label="fragment_insert"
+        tools:layout="@layout/fragment_insert" >
+        <action
+            android:id="@+id/action_insertFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_insertFragment_to_scanFragment"
+            app:destination="@id/scanFragment" />
     </fragment>
 
 </navigation>

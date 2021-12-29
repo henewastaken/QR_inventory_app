@@ -10,19 +10,16 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.NavUtils
 import androidx.navigation.fragment.findNavController
-import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
-import java.io.File
+import kotlinx.android.synthetic.main.fragment_list.view.*
+import kotlinx.android.synthetic.main.fragment_scan.view.*
 import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 import java.lang.Exception
 
 
 class ScanFragment : Fragment() {
-    private var scanner : Scanner? = Scanner()
+
     internal lateinit var mQrResultLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreateView(
@@ -31,20 +28,18 @@ class ScanFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         createScanner()
-        startScanner()
+        //startScanner()
         val view = inflater.inflate(R.layout.fragment_scan, container, false)
 
+        view.floatingActionButtonCamera.setOnClickListener {
+            startScanner()
+        }
 
 
         setHasOptionsMenu(true)
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        Log.d("on_juttuset", "scan fragment ON resume")
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_bar, menu)
@@ -52,14 +47,16 @@ class ScanFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_main) {
-            findNavController().navigate(R.id.action_scanFragment_to_testFragment)
+            findNavController().navigate(R.id.action_scanFragment_to_listFragment)
         }
         if (item.itemId == R.id.home) {
             Toast.makeText(requireContext(), "up presssed", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_scanFragment_to_testFragment)
+            findNavController().navigate(R.id.action_scanFragment_to_listFragment)
         }
         return super.onOptionsItemSelected(item)
     }
+
+
     fun createScanner() {
 
         mQrResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -69,7 +66,7 @@ class ScanFragment : Fragment() {
                 if(result.contents != null) {
                     // Do something with the contents (this is usually a URL)
                     Toast.makeText(activity, result.contents, Toast.LENGTH_SHORT).show()
-                    scanner?.insert(result.contents)
+                    //scanner?.insert(result.contents)
 
                     try {
                         // Get filename from Main Activity
