@@ -2,9 +2,16 @@ package com.example.testi
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.*
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_test.view.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -16,18 +23,64 @@ import java.nio.charset.Charset
  NYt käytetätään testaamiseen. Ei saa scannerista ppitivetttä vektoria,
  siinä on joku häitkkä, mut muutenkin nosql tai scv tulee kuitenkin käyttöön nii ei haittaa atm.
  */
-class TestFragment : Fragment(R.layout.fragment_test) {
-    private var scanner : Scanner? = Scanner()
+class TestFragment : Fragment() {
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_test, container, false)
 
-        //Toast.makeText(activity, scanner?.getItems()?.size.toString(), Toast.LENGTH_SHORT).show()
-        if (scanner?.getItems()?.isEmpty() == false) {
-            //Toast.makeText(activity, scanner?.getItems()?.firstElement(), Toast.LENGTH_SHORT).show()
 
-
+        view.floatingActionButton.setOnClickListener{
+            findNavController().navigate(R.id.action_testFragment_to_scanFragment)
         }
+
+
+        // Recyclerview stuff
+        /*
+        val adapter = ListAdapter()
+        val recyclerView = view.recyclerview
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer{ user ->
+            adapter.setData(user)
+        })
+
+
+        // Navigate to add fragment when floating button is pressed
+        view..setOnClickListener{
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
+        */
+        setHasOptionsMenu(true)
+        return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_scan) {
+            findNavController().navigate(R.id.action_testFragment_to_scanFragment)
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+/*
+    override fun onStart() {
+    super.onStart()
+
+    //Toast.makeText(activity, scanner?.getItems()?.size.toString(), Toast.LENGTH_SHORT).show()
+    if (scanner?.getItems()?.isEmpty() == false) {
+        //Toast.makeText(activity, scanner?.getItems()?.firstElement(), Toast.LENGTH_SHORT).show()
+
+
+    }
 
     }
     override fun onPause() {
@@ -68,6 +121,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         } finally {
 
         }
-
     }
+ */
+
 }

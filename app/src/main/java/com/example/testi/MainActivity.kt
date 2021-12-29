@@ -8,7 +8,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.AppBarConfiguration
 import java.io.FileOutputStream
+import java.util.function.ToLongBiFunction
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,24 +24,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Create the file
-        val fileName = getTestFileName()
-        val output : FileOutputStream = openFileOutput(fileName, Context.MODE_APPEND)!!
+        // val fileName = getTestFileName()
+        // val output : FileOutputStream = openFileOutput(fileName, Context.MODE_APPEND)!!
         // Set custom toolbar as app bar
-        setSupportActionBar(findViewById(R.id.toolbar))
+        //val toolbar = setSupportActionBar(findViewById(R.id.toolbar))
 
-
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, testFragment)
-            .commit()
-
+        setupActionBarWithNavController(findNavController(R.id.fragment))
+        //setupActionBarWithNavController(findNavController(R.id.fragment))
     }
-
 
     // Function returns the file name. Can be used in fragemnts also
-    internal fun getTestFileName(): String {
+    fun getTestFileName(): String {
         return fileName
     }
+}
+
+
+
+/*
     // inflate menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_bar, menu)
@@ -45,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Add functionality to menu items
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_new_item -> {
@@ -70,3 +75,5 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
+
+ */

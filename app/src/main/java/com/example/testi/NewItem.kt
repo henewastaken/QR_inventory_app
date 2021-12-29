@@ -24,14 +24,12 @@ class NewItem : AppCompatActivity() {
         setContentView(R.layout.activity_new_item)
 
 
-        // Set custom toolbar as app bar
-        setSupportActionBar(findViewById(R.id.toolbar))
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_bar, menu)
         return true
     }
-
+/*
     // Add functionality to menu items
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -44,5 +42,5 @@ class NewItem : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
+*/
 }
