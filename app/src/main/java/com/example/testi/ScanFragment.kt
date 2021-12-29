@@ -49,9 +49,8 @@ class ScanFragment : Fragment() {
         if (item.itemId == R.id.menu_main) {
             findNavController().navigate(R.id.action_scanFragment_to_listFragment)
         }
-        if (item.itemId == R.id.home) {
-            Toast.makeText(requireContext(), "up presssed", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_scanFragment_to_listFragment)
+        if (item.itemId == R.id.menu_new_item) {
+            findNavController().navigate(R.id.action_scanFragment_to_insertFragment)
         }
         return super.onOptionsItemSelected(item)
     }
