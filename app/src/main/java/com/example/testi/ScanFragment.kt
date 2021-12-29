@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NavUtils
+import androidx.navigation.fragment.findNavController
 import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
 import java.io.File
@@ -21,7 +21,7 @@ import java.io.OutputStream
 import java.lang.Exception
 
 
-class ScanFragment : Fragment(R.layout.fragment_scan) {
+class ScanFragment : Fragment() {
     private var scanner : Scanner? = Scanner()
     internal lateinit var mQrResultLauncher : ActivityResultLauncher<Intent>
 
@@ -32,7 +32,12 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
     ): View? {
         createScanner()
         startScanner()
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_scan, container, false)
+
+
+
+        setHasOptionsMenu(true)
+        return view
     }
 
     override fun onResume() {
@@ -41,7 +46,20 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         Log.d("on_juttuset", "scan fragment ON resume")
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_bar, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_main) {
+            findNavController().navigate(R.id.action_scanFragment_to_testFragment)
+        }
+        if (item.itemId == R.id.home) {
+            Toast.makeText(requireContext(), "up presssed", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_scanFragment_to_testFragment)
+        }
+        return super.onOptionsItemSelected(item)
+    }
     fun createScanner() {
 
         mQrResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

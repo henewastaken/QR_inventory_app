@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/testFragment"
-        android:name="com.example.testi.TestFragment"
+        android:name="com.example.testi.ListFragment"
         android:label="Main screen"
-        tools:layout="@layout/fragment_test">
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_testFragment_to_scanFragment"
             app:destination="@id/scanFragment" />
@@ -19,7 +19,7 @@
         android:id="@+id/scanFragment"
         android:name="com.example.testi.ScanFragment"
         android:label="Scan"
-        tools:layout="@layout/fragment_test" >
+        tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_scanFragment_to_testFragment"
             app:destination="@id/testFragment" />

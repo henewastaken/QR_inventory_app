@@ -1,36 +1,27 @@
 package com.example.testi
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.*
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_test.view.*
-import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.fragment_list.view.*
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStream
-import java.lang.Exception
-import java.nio.charset.Charset
+import kotlinx.android.synthetic.main.fragment_list.view.*
 
 /*
  Main menu fragment
  NYt käytetätään testaamiseen. Ei saa scannerista ppitivetttä vektoria,
  siinä on joku häitkkä, mut muutenkin nosql tai scv tulee kuitenkin käyttöön nii ei haittaa atm.
  */
-class TestFragment : Fragment() {
+class ListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_test, container, false)
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
 
 
         view.floatingActionButton.setOnClickListener{

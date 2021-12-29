@@ -1,24 +1,20 @@
 package com.example.testi
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
-import android.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.AppBarConfiguration
-import java.io.FileOutputStream
-import java.util.function.ToLongBiFunction
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var navController: NavController
     val fileName = "testfile"
     private val scanFragment = ScanFragment()
-    private val testFragment = TestFragment()
+    private val testFragment = ListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +24,17 @@ class MainActivity : AppCompatActivity() {
         // val output : FileOutputStream = openFileOutput(fileName, Context.MODE_APPEND)!!
         // Set custom toolbar as app bar
         //val toolbar = setSupportActionBar(findViewById(R.id.toolbar))
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        navController = navHostFragment.findNavController()
 
-        setupActionBarWithNavController(findNavController(R.id.fragment))
+        setupActionBarWithNavController(navController)
         //setupActionBarWithNavController(findNavController(R.id.fragment))
+
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
     // Function returns the file name. Can be used in fragemnts also
     fun getTestFileName(): String {
         return fileName
