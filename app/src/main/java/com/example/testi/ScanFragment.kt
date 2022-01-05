@@ -46,7 +46,7 @@ class ScanFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_main) {
+        if (item.itemId == R.id.menu_list) {
             findNavController().navigate(R.id.action_scanFragment_to_listFragment)
         }
         if (item.itemId == R.id.menu_new_item) {
