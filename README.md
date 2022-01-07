@@ -11,3 +11,9 @@ When user uses flower, qr is scanned and amount taken is imputted.
 When user goes to store user can with single button press get all items that are
 under the warning limit so user knows to buy more of those items.
 Also comments can be inserted to each item, i.e. coockig time for rice..
+
+TODO:
+- Database item delete
+- functionality for getting items that has amount < minAmount
+- fucntionality for searching from database via qr reader
+- make it look pretty
