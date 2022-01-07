@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_listFragment_to_insertFragment"
             app:destination="@id/insertFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
 
     <fragment
@@ -29,6 +32,9 @@
         <action
             android:id="@+id/action_scanFragment_to_insertFragment"
             app:destination="@id/insertFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/insertFragment"
@@ -41,6 +47,21 @@
         <action
             android:id="@+id/action_insertFragment_to_scanFragment"
             app:destination="@id/scanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.testi.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_updateFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_updateFragment_to_scanFragment"
+            app:destination="@id/scanFragment" />
+        <argument
+            android:name="currentItem"
+            app:argType="com.example.testi.data.Item" />
     </fragment>
 
 </navigation>

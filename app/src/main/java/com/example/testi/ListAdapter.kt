@@ -3,6 +3,7 @@ package com.example.testi
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testi.data.Item
 import kotlinx.android.synthetic.main.custom_row.view.*
@@ -27,11 +28,17 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = itemList[position]
-        holder.itemView.tvIdList.text = currentItem.id.toString()
+        //holder.itemView.tvIdList.text = currentItem.id.toString()
         holder.itemView.tvNameList.text = currentItem.name
         holder.itemView.tvAmountList.text = currentItem.amount.toString()
         holder.itemView.tvMinList.text = currentItem.minTarget.toString()
         holder.itemView.tvOptinalList.text = currentItem.optionalData
+
+        // Navigating to update fragemnt on lsit item click, and passing information
+        holder.itemView.row_layout.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
+            holder.itemView.findNavController().navigate(action)
+        }
 
     }
 
