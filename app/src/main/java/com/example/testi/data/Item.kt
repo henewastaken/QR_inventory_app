@@ -18,6 +18,7 @@ optionalData = any optional data user wants to input
 data class Item (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
+    val qrName: String,
     val name: String,
     val amount: Double,
     val minTarget: Double,

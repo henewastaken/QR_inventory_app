@@ -57,9 +57,9 @@ class UpdateFragment : Fragment() {
             // if optionalData is empty, add line(-) to database
             if (TextUtils.isEmpty(optionalData)) {
                 // Add "-" to optional data if it's empty
-                updatedItem = Item(args.currentItem.id, name, amount.toString().toDouble(), min.toString().toDouble(), "-")
+                updatedItem = Item(args.currentItem.id, args.currentItem.qrName, name, amount.toString().toDouble(), min.toString().toDouble(), "-")
             } else {
-                updatedItem = Item(args.currentItem.id, name, amount.toString().toDouble(), min.toString().toDouble(), optionalData)
+                updatedItem = Item(args.currentItem.id, args.currentItem.qrName, name, amount.toString().toDouble(), min.toString().toDouble(), optionalData)
             }
 
             // Update current item
@@ -71,7 +71,7 @@ class UpdateFragment : Fragment() {
         } else if (errorCode == 1) {
             Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()
         } else if (errorCode == 2) {
-            Toast.makeText(requireContext(), "Please check that numbers don't contain letters or comma.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please check that numbers don't contain letters or comma.", Toast.LENGTH_LONG).show()
         }
     }
 

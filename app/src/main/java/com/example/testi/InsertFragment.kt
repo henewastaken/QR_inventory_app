@@ -3,11 +3,14 @@ package com.example.testi
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.testi.data.Item
 import com.example.testi.data.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_insert.*
@@ -18,6 +21,11 @@ import java.lang.Exception
 class InsertFragment : Fragment() {
 
     private lateinit var mItemViewModel: ItemViewModel
+
+    lateinit var qrName: String // Data from the qr code
+
+
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?
@@ -26,6 +34,12 @@ class InsertFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_insert, container, false)
 
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+
+
+        // Getting the qr name
+        qrName = arguments?.getString("key").toString()
+        Log.d("on_juttuset", qrName )
+
 
         view.btnAdd.setOnClickListener{
             insetDataToDatabase()
@@ -62,9 +76,9 @@ class InsertFragment : Fragment() {
         if (errorCode == 0) {
             // if optionalData is empty, add line(-) to database
             if (TextUtils.isEmpty(optionalData)) {
-                 item = Item(0, name, amount.toString().toDouble(), min.toString().toDouble(),"-")
+                 item = Item(0, qrName, name, amount.toString().toDouble(), min.toString().toDouble(),"-")
             } else {
-                 item = Item(0, name, amount.toString().toDouble(), min.toString().toDouble(), optionalData)
+                 item = Item(0, qrName, name, amount.toString().toDouble(), min.toString().toDouble(), optionalData)
             }
             // Add data to database
             mItemViewModel.addItem(item)

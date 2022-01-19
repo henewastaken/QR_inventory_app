@@ -16,4 +16,9 @@ class ItemRepository (private val itemDao: ItemDao){
     suspend fun updateItem(item: Item) {
         itemDao.updateItem(item)
     }
+
+    fun getItem (scanned: String): LiveData<Item> {
+        return itemDao.getItem(scanned)
+    }
+
 }

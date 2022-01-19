@@ -16,12 +16,13 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
 
     val readAllData: LiveData<List<Item>>
     private val repository: ItemRepository
-
     init {
         val itemDao = ItemDatabase.getDatabase(application).itemDao()
         repository = ItemRepository(itemDao)
         readAllData = repository.readAllData
     }
+
+
 
     fun addItem(item: Item) {
         // We want this to run in background thread
@@ -34,6 +35,10 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateItem(item)
         }
+    }
+
+    fun getItem (scanned: String): LiveData<Item> {
+        return repository.getItem(scanned)
     }
 
 }
