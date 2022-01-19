@@ -12,8 +12,7 @@ import com.example.testi.data.Item
 import com.example.testi.data.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_insert.*
 import kotlinx.android.synthetic.main.fragment_insert.view.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
-import kotlinx.coroutines.newSingleThreadContext
+import java.lang.Exception
 
 
 class InsertFragment : Fragment() {
@@ -56,30 +55,46 @@ class InsertFragment : Fragment() {
         val name = etName.text.toString()
         val amount = etAmount.text
         val min = etMin.text
-        val optinalData = etOptionalData.text.toString()
+        val optionalData = etOptionalData.text.toString()
         var item: Item
+        val errorCode = inputCheck(name, amount, min)
 
-        if (inputCheck(name, amount, min)) {
-            // if optinalData is empty, add line(-) to database
-            if (TextUtils.isEmpty(optinalData)) {
+        if (errorCode == 0) {
+            // if optionalData is empty, add line(-) to database
+            if (TextUtils.isEmpty(optionalData)) {
                  item = Item(0, name, amount.toString().toDouble(), min.toString().toDouble(),"-")
             } else {
-                 item = Item(0, name, amount.toString().toDouble(), min.toString().toDouble(),optinalData)
+                 item = Item(0, name, amount.toString().toDouble(), min.toString().toDouble(), optionalData)
             }
             // Add data to database
             mItemViewModel.addItem(item)
-            Toast.makeText(requireContext(), "Succesfully inserted", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Successfully inserted", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_insertFragment_to_listFragment)
-        // Inputcheck returned false, toast is input correct?
-        } else {
-            Toast.makeText(requireContext(), "Please fill in all fields.", Toast.LENGTH_LONG).show()
+        // Inputcheck returned false, toast depending on error code
+        } else if (errorCode == 1) {
+            Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()
+        } else if (errorCode == 2) {
+            Toast.makeText(requireContext(), "Please check that numbers don't contain letters or comma.", Toast.LENGTH_SHORT).show()
         }
 
     }
 
     // Checks that name and amount is inputted
-    // Returns false if any of name, amount or min is empty
-    private fun inputCheck(name: String, amount: Editable, min: Editable): Boolean {
-        return !(TextUtils.isEmpty(name) || amount.isEmpty() || min.isEmpty())
+    // Returns int that is used as error code.
+    // 0: all good
+    // 1: any of name, amount or min is empty
+    // 2: amount or min are in string format
+    private fun inputCheck(name: String, amount: Editable, min: Editable): Int {
+        if (!(TextUtils.isEmpty(name) || amount.isEmpty() || min.isEmpty())) {
+            try {
+                amount.toString().toDouble()
+                min.toString().toDouble()
+            } catch (e : Exception) {
+                //Toast.makeText(requireContext(), "Insert amounts in number form", Toast.LENGTH_LONG).show()
+                return 2 // Double error
+            }
+            return 0 // All good
+        }
+        return 1 // contains empty fields
     }
 }

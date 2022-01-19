@@ -16,6 +16,7 @@ import com.example.testi.data.ItemViewModel
 import kotlinx.android.synthetic.main.custom_row.*
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
+import java.lang.Exception
 
 class UpdateFragment : Fragment() {
 
@@ -45,38 +46,53 @@ class UpdateFragment : Fragment() {
 
     private fun updateItem() {
         val name = etUpdateName.text.toString()
-        val amount = etUpdateAmount.text.toString().toDouble()
-        val min = etUpdateMin.text.toString().toDouble()
+        val amount = etUpdateAmount.text
+        val min = etUpdateMin.text
         val optionalData = etUpdateOptionalData.text.toString()
         var updatedItem: Item // Item to be finally inserted (updated) to database
+        val errorCode = inputCheck(name, amount, min)
 
-
-        if(inputCheck(name, etUpdateAmount.text, etUpdateMin.text)) {
+        if (errorCode == 0) {
             // Create updated item object
+            // if optionalData is empty, add line(-) to database
             if (TextUtils.isEmpty(optionalData)) {
                 // Add "-" to optional data if it's empty
-                updatedItem = Item(args.currentItem.id, name, amount, min, "-")
-                 //item = Item(0, name, amount.toString().toDouble(), min.toString().toDouble(),"-")
+                updatedItem = Item(args.currentItem.id, name, amount.toString().toDouble(), min.toString().toDouble(), "-")
             } else {
-                 //item = Item(0, name, amount.toString().toDouble(), min.toString().toDouble(),optinalData)
-                updatedItem = Item(args.currentItem.id, name, amount, min, optionalData)
+                updatedItem = Item(args.currentItem.id, name, amount.toString().toDouble(), min.toString().toDouble(), optionalData)
             }
 
             // Update current item
             mItemViewModel.updateItem(updatedItem)
-            Toast.makeText(requireContext(), "Succesfully updated", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Succesfully updated", Toast.LENGTH_SHORT).show()
             // Navigate back to list fragment
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-        // All requred fields are not filled
-        } else {
-            Toast.makeText(requireContext(), "Please fill all required ields.", Toast.LENGTH_LONG).show()
+        // Inputcheck returned false, toast depending on error code
+        } else if (errorCode == 1) {
+            Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()
+        } else if (errorCode == 2) {
+            Toast.makeText(requireContext(), "Please check that numbers don't contain letters or comma.", Toast.LENGTH_SHORT).show()
         }
     }
 
+
     // Checks that name and amount is inputted
-    // Returns false if any of name, amount or min is empty
-    private fun inputCheck(name: String, amount: Editable, min: Editable): Boolean {
-        return !(TextUtils.isEmpty(name) || amount.isEmpty() || min.isEmpty())
+    // Returns int that is used as error code.
+    // 0: all good
+    // 1: any of name, amount or min is empty
+    // 2: amount or min are in string format
+    private fun inputCheck(name: String, amount: Editable, min: Editable): Int {
+        if (!(TextUtils.isEmpty(name) || amount.isEmpty() || min.isEmpty())) {
+            try {
+                amount.toString().toDouble()
+                min.toString().toDouble()
+            } catch (e : Exception) {
+                //Toast.makeText(requireContext(), "Insert amounts in number form", Toast.LENGTH_LONG).show()
+                return 2 // Double error
+            }
+            return 0 // All good
+        }
+        return 1 // contains empty fields
     }
 
 }
