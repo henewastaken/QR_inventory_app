@@ -10,9 +10,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.testi.data.ItemViewModel
 import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.android.synthetic.main.custom_row.view.*
 import kotlinx.android.synthetic.main.fragment_scan.view.*
 
 
@@ -69,7 +71,7 @@ class ScanFragment : Fragment() {
 
                     search(result.contents)
 
-                    Log.d("on_juttuset","moi")
+                    //Log.d("on_juttuset","moi")
                     //var item : Item =
 
                 }
@@ -81,7 +83,8 @@ class ScanFragment : Fragment() {
     fun startScanner() {
         val scanner = IntentIntegrator(activity)
         // QR Code Format
-        scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+        //scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+        scanner.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
         // Set Text Prompt at Bottom of QR code Scanner Activity
         scanner.setPrompt("Scan qr code...")
         // Start Scanner (don't use initiateScan() unless if you want to use OnActivityResult)
@@ -93,15 +96,19 @@ class ScanFragment : Fragment() {
 
         mItemViewModel.getItem(searchQuery).observe(viewLifecycleOwner, {item ->
             item.let {
-                Toast.makeText(activity, query, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(activity, query, Toast.LENGTH_SHORT).show()
                 // Jos item on uusi, siirrtyään insert fragmenttiin
                 if (item == null) {
                     val bundle = Bundle()
                     bundle.putString("key", query)
                    // val action = ScanFragmentDirections.actionScanFragmentToInsertFragment(query)
                     findNavController().navigate(R.id.action_scanFragment_to_insertFragment, bundle)
-                } else{
-                    Toast.makeText(activity, query + " exsists", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(activity, query+ " exsists", Toast.LENGTH_SHORT).show()
+                    Log.d("on_juttuset", item.qrName)
+
+                    val action = ScanFragmentDirections.actionScanFragmentToUpdateFragment(item)
+                    ListAdapter.MyViewHolder(requireView()).itemView.findNavController().navigate(action)
                 }
             }
         })

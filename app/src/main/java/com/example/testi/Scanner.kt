@@ -19,11 +19,11 @@ class Scanner {
 
     fun insert (elem : String) {
         scanned.addElement(elem)
-        Log.d("on_juttuset",scanned.size.toString())
+        //Log.d("on_juttuset",scanned.size.toString())
     }
 
     fun getItems (): Vector<String> {
-        Log.d("on_juttuset","size " + scanned.size.toString())
+        //Log.d("on_juttuset","size " + scanned.size.toString())
         return scanned
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 class ItemRepository (private val itemDao: ItemDao){
 
     val readAllData: LiveData<List<Item>> = itemDao.readAllItems()
+    val getAlarm: LiveData<List<Item>> = itemDao.getAlarm()
 
     // Adds item
     suspend fun addItem(item: Item) {
@@ -20,5 +21,6 @@ class ItemRepository (private val itemDao: ItemDao){
     fun getItem (scanned: String): LiveData<Item> {
         return itemDao.getItem(scanned)
     }
+
 
 }

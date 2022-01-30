@@ -37,7 +37,7 @@ class ListFragment : Fragment() {
 
         // ItemViewModel
         mItemVewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-        mItemVewModel.readAllData.observe(viewLifecycleOwner, { item ->
+        mItemVewModel.getAlarmData.observe(viewLifecycleOwner, { item ->
             adapter.setData(item)
         })
 

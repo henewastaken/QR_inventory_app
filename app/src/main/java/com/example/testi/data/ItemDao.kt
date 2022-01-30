@@ -24,4 +24,6 @@ interface ItemDao {
     @Query("SELECT * FROM item_table WHERE qrName LIKE :scanned")
     fun getItem(scanned: String): LiveData<Item>
 
+    @Query("SELECT * FROM item_table WHERE amount <= minTarget")
+    fun getAlarm(): LiveData<List<Item>>
 }
