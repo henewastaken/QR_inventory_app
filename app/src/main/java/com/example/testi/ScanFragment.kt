@@ -54,6 +54,9 @@ class ScanFragment : Fragment() {
         if (item.itemId == R.id.menu_new_item) {
             findNavController().navigate(R.id.action_scanFragment_to_insertFragment)
         }
+        if (item.itemId == R.id.menu_all_items ) {
+            findNavController().navigate(R.id.action_scanFragment_to_allItemsFragment)
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -65,15 +68,7 @@ class ScanFragment : Fragment() {
                 val result = IntentIntegrator.parseActivityResult(it.resultCode, it.data)
 
                 if(result.contents != null) {
-                    // Do something with the contents (this is usually a URL)
-
-                    //Toast.makeText(activity, result.contents, Toast.LENGTH_SHORT).show()
-
                     search(result.contents)
-
-                    //Log.d("on_juttuset","moi")
-                    //var item : Item =
-
                 }
             }
         }
@@ -86,7 +81,7 @@ class ScanFragment : Fragment() {
         //scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
         scanner.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
         // Set Text Prompt at Bottom of QR code Scanner Activity
-        scanner.setPrompt("Scan qr code...")
+        scanner.setPrompt("Scan code...")
         // Start Scanner (don't use initiateScan() unless if you want to use OnActivityResult)
         mQrResultLauncher.launch(scanner.createScanIntent())
     }
@@ -96,36 +91,17 @@ class ScanFragment : Fragment() {
 
         mItemViewModel.getItem(searchQuery).observe(viewLifecycleOwner, {item ->
             item.let {
-                //Toast.makeText(activity, query, Toast.LENGTH_SHORT).show()
-                // Jos item on uusi, siirrtyään insert fragmenttiin
+                // Jos item on uusi(aka null), siirrtyään insert fragmenttiin
                 if (item == null) {
                     val bundle = Bundle()
                     bundle.putString("key", query)
-                   // val action = ScanFragmentDirections.actionScanFragmentToInsertFragment(query)
                     findNavController().navigate(R.id.action_scanFragment_to_insertFragment, bundle)
+                // Item on olemassa, joten navigoidaan update fragmenttiin
                 } else {
-                    Toast.makeText(activity, query+ " exsists", Toast.LENGTH_SHORT).show()
-                    Log.d("on_juttuset", item.qrName)
-
                     val action = ScanFragmentDirections.actionScanFragmentToUpdateFragment(item)
                     ListAdapter.MyViewHolder(requireView()).itemView.findNavController().navigate(action)
                 }
             }
         })
-
-
-//        // Recyclerview
-//        val adapter = ListAdapter()
-//        val recyclerView = view?.rwList
-//        recyclerView?.adapter = adapter
-//        recyclerView?.layoutManager = LinearLayoutManager(requireContext())
-//
-//
-//        // ItemViewModel
-//        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-//        mItemViewModel.readAllData.observe(viewLifecycleOwner, Observer {item ->
-//
-//        })
     }
-
 }

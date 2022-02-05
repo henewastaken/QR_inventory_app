@@ -60,7 +60,9 @@ class InsertFragment : Fragment() {
         if (item.itemId == R.id.menu_list) {
             findNavController().navigate(R.id.action_insertFragment_to_listFragment)
         }
-
+        if (item.itemId == R.id.menu_all_items ) {
+            findNavController().navigate(R.id.action_scanFragment_to_allItemsFragment)
+        }
         return super.onOptionsItemSelected(item)
     }
 

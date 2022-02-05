@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_listFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_allItemsFragment"
+            app:destination="@id/allItemsFragment" />
     </fragment>
 
     <fragment
@@ -35,6 +38,9 @@
         <action
             android:id="@+id/action_scanFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_allItemsFragment"
+            app:destination="@id/allItemsFragment" />
     </fragment>
     <fragment
         android:id="@+id/insertFragment"
@@ -47,6 +53,9 @@
         <action
             android:id="@+id/action_insertFragment_to_scanFragment"
             app:destination="@id/scanFragment" />
+        <action
+            android:id="@+id/action_insertFragment_to_allItemsFragment"
+            app:destination="@id/allItemsFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
@@ -62,6 +71,27 @@
         <argument
             android:name="currentItem"
             app:argType="com.example.testi.data.Item" />
+        <action
+            android:id="@+id/action_updateFragment_to_allItemsFragment"
+            app:destination="@id/allItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allItemsFragment"
+        android:name="com.example.testi.AllItemsFragment"
+        android:label="fragment_all_items"
+        tools:layout="@layout/fragment_all_items" >
+        <action
+            android:id="@+id/action_allItemsFragment_to_scanFragment"
+            app:destination="@id/scanFragment" />
+        <action
+            android:id="@+id/action_allItemsFragment_to_insertFragment"
+            app:destination="@id/insertFragment" />
+        <action
+            android:id="@+id/action_allItemsFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_allItemsFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
 
 </navigation>

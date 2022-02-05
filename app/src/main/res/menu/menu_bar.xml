@@ -5,10 +5,9 @@
 
     <item
         android:id="@+id/menu_list"
-        android:title="List"
+        android:title="To buy items"
         android:icon="@drawable/ic_baseline_menu_24"
-        android:iconTint="@color/white"
-        />
+        android:iconTint="@color/white" />
 
     <item
         android:id="@+id/menu_scan"
@@ -17,4 +16,9 @@
     <item
         android:id="@+id/menu_new_item"
         android:title="Insert new item" />
+
+    <item
+        android:id="@+id/menu_all_items"
+        android:title="All items" />
+
 </menu>

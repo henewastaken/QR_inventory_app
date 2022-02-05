@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testi.data.ItemViewModel
 
 /*
- Main menu fragment
- NYt käytetätään testaamiseen. Ei saa scannerista ppitivetttä vektoria,
- siinä on joku häitkkä, mut muutenkin nosql tai scv tulee kuitenkin käyttöön nii ei haittaa atm.
+List fragment. Shows in recycler view all items that amount is less than min amount.
+Clicking item navigates to update fragment.
+Clicking + floating action button navigates to insert fragment.
  */
+
 class ListFragment : Fragment() {
 
     private lateinit var mItemVewModel: ItemViewModel
@@ -29,11 +30,10 @@ class ListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
         // Recyclerview
-        val adapter = ListAdapter()
+        val adapter = ListAdapter(javaClass)
         val recyclerView = view.rwList
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
 
         // ItemViewModel
         mItemVewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
@@ -41,21 +41,20 @@ class ListFragment : Fragment() {
             adapter.setData(item)
         })
 
-
-
         view.floatingActionButton.setOnClickListener{
             findNavController().navigate(R.id.action_listFragment_to_insertFragment)
         }
-
 
         setHasOptionsMenu(true)
         return view
     }
 
+    // Inflate menubar
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_bar, menu)
     }
 
+    // Menubar selection handler and navigation
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_scan) {
             findNavController().navigate(R.id.action_listFragment_to_scanFragment)
@@ -63,10 +62,9 @@ class ListFragment : Fragment() {
         if (item.itemId == R.id.menu_new_item) {
             findNavController().navigate(R.id.action_listFragment_to_insertFragment)
         }
-
-
+        if (item.itemId == R.id.menu_all_items ) {
+            findNavController().navigate(R.id.action_listFragment_to_allItemsFragment)
+        }
         return super.onOptionsItemSelected(item)
     }
-
-
 }
