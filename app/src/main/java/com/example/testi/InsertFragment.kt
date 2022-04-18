@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.testi.data.Item
 import com.example.testi.data.ItemViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_insert.*
 import kotlinx.android.synthetic.main.fragment_insert.view.*
 import java.lang.Exception
@@ -23,9 +24,7 @@ class InsertFragment : Fragment() {
     private lateinit var mItemViewModel: ItemViewModel
 
     lateinit var qrName: String // Data from the qr code
-
-
-
+    val TAG = "on_juttuset"
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?
@@ -35,11 +34,9 @@ class InsertFragment : Fragment() {
 
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
 
-
         // Getting the qr name
         qrName = arguments?.getString("key").toString()
-        Log.d("on_juttuset", qrName )
-
+        Log.d(TAG, qrName )
 
         view.btnAdd.setOnClickListener{
             insetDataToDatabase()
@@ -53,6 +50,7 @@ class InsertFragment : Fragment() {
         inflater.inflate(R.menu.menu_bar, menu)
     }
 
+    // Navigations
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_scan) {
             findNavController().navigate(R.id.action_insertFragment_to_scanFragment)
@@ -75,6 +73,7 @@ class InsertFragment : Fragment() {
         var item: Item
         val errorCode = inputCheck(name, amount, min)
 
+        // Check the error codes and do stuff accordingly to it
         if (errorCode == 0) {
             // if optionalData is empty, add line(-) to database
             if (TextUtils.isEmpty(optionalData)) {
@@ -85,7 +84,8 @@ class InsertFragment : Fragment() {
             // Add data to database
             mItemViewModel.addItem(item)
             Toast.makeText(requireContext(), "Successfully inserted", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_insertFragment_to_listFragment)
+            //findNavController().navigate(R.id.action_insertFragment_to_listFragment)
+            findNavController().popBackStack()
         // Inputcheck returned false, toast depending on error code
         } else if (errorCode == 1) {
             Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()

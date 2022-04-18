@@ -17,6 +17,7 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
     val readAllData: LiveData<List<Item>>
     val getAlarmData: LiveData<List<Item>>
     private val repository: ItemRepository
+
     init {
         val itemDao = ItemDatabase.getDatabase(application).itemDao()
         repository = ItemRepository(itemDao)

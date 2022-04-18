@@ -36,8 +36,6 @@ class ScanFragment : Fragment() {
         view.floatingActionButtonCamera.setOnClickListener {
             startScanner()
         }
-
-
         setHasOptionsMenu(true)
         return view
     }
@@ -86,17 +84,19 @@ class ScanFragment : Fragment() {
         mQrResultLauncher.launch(scanner.createScanIntent())
     }
 
+    // Looks if item already exists in databace and navigates to
+    // correct fragment
     private fun search (query: String) {
         val searchQuery = "%$query%"
 
         mItemViewModel.getItem(searchQuery).observe(viewLifecycleOwner, {item ->
             item.let {
-                // Jos item on uusi(aka null), siirrtyään insert fragmenttiin
+                // If item is new (aka null), navigate to insert fragment
                 if (item == null) {
                     val bundle = Bundle()
                     bundle.putString("key", query)
                     findNavController().navigate(R.id.action_scanFragment_to_insertFragment, bundle)
-                // Item on olemassa, joten navigoidaan update fragmenttiin
+                // If item exists (aka !null) navigate to update fragment
                 } else {
                     val action = ScanFragmentDirections.actionScanFragmentToUpdateFragment(item)
                     ListAdapter.MyViewHolder(requireView()).itemView.findNavController().navigate(action)

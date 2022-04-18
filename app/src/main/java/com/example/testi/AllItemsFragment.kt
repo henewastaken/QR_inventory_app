@@ -2,9 +2,6 @@ package com.example.testi
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +9,7 @@ import com.example.testi.data.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_all_items.view.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import android.util.Log
+import android.view.*
 
 class AllItemsFragment : Fragment() {
 
@@ -39,9 +37,26 @@ class AllItemsFragment : Fragment() {
         view.fab_all_items.setOnClickListener{
             findNavController().navigate(R.id.action_allItemsFragment_to_insertFragment)
         }
-
         setHasOptionsMenu(true)
         return view
     }
 
+    // Inflate menubar
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_bar, menu)
+    }
+
+    // Menubar selection handler and navigation
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_scan) {
+            findNavController().navigate(R.id.action_allItemsFragment_to_scanFragment)
+        }
+        if (item.itemId == R.id.menu_new_item) {
+            findNavController().navigate(R.id.action_allItemsFragment_to_insertFragment)
+        }
+        if (item.itemId == R.id.menu_list ) {
+            findNavController().navigate(R.id.action_allItemsFragment_to_listFragment)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

@@ -17,7 +17,7 @@ Recycler view adapter class
 class ListAdapter (val originClass: Class<Fragment>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var itemList = emptyList<Item>()
-
+    val TAG = "on_juttuset"
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -32,15 +32,14 @@ class ListAdapter (val originClass: Class<Fragment>): RecyclerView.Adapter<ListA
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var currentItem: Item = itemList[position]
 
-        Log.d("on_juttuset", "class: " + originClass)
-        Log.d("on_juttuset", "ecualts: " + (originClass == AllItemsFragment::class.java).toString())
+        Log.d(TAG, "class: " + originClass)
+        Log.d(TAG, "ecualts: " + (originClass == AllItemsFragment::class.java).toString())
 
-                // Set values from item to custom_row layout
+        // Set values from item to custom_row layout
         holder.itemView.tvNameList.text = currentItem.name
         holder.itemView.tvAmountList.text = currentItem.amount.toString()
         holder.itemView.tvMinList.text = currentItem.minTarget.toString()
-        holder.itemView.tvOptinalList.text = currentItem.qrName
-
+        holder.itemView.tvOptinalList.text = currentItem.optionalData
 
         // Navigating to update fragment on list item click, and passing information
         holder.itemView.row_layout.setOnClickListener {

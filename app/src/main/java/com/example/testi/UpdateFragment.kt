@@ -1,4 +1,4 @@
-        package com.example.testi
+package com.example.testi
 
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +23,14 @@ class UpdateFragment : Fragment() {
 
     private val args by navArgs<UpdateFragmentArgs>()
     private lateinit var mItemViewModel: ItemViewModel
+    val TAG = "on_juttuset"
+
+    /////////////////////////////////////
+    // TÄNNE NAVIGOINTI TAKAISIN LÄHTÖFRAGMENTTIIN
+    // NYT ON PALAA AINA VAAN LIST (ITEMS TO BUYS) FRAGMENTTIIN
+    ////////////
+
+
 
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -32,20 +40,23 @@ class UpdateFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_update, container, false)
 
-        Log.i("on_juttuset", "selected item " + args.currentItem.name)
+        Log.i(TAG, "selected item " + args.currentItem.name)
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
 
+        // Fill the editText fields with currentItem data
         view.etUpdateName.setText(args.currentItem.name)
         view.etUpdateAmount.setText(args.currentItem.amount.toString())
         view.etUpdateMin.setText(args.currentItem.minTarget.toString())
         view.etUpdateOptionalData.setText(args.currentItem.optionalData)
 
-        view.btnUpdate.setOnClickListener{
+        // Update the data to currentItem
+        view.btnUpdate.setOnClickListener {
             updateItem()
         }
         return view
     }
 
+    // Updates the data to currentItem from the editText fields
     private fun updateItem() {
         val name = etUpdateName.text.toString()
         val amount = etUpdateAmount.text
@@ -54,21 +65,33 @@ class UpdateFragment : Fragment() {
         var updatedItem: Item // Item to be finally inserted (updated) to database
         val errorCode = inputCheck(name, amount, min)
 
+        // Check the error codes and do stuff accordingly to it
         if (errorCode == 0) {
             // Create updated item object
             // if optionalData is empty, add line(-) to database
             if (TextUtils.isEmpty(optionalData)) {
                 // Add "-" to optional data if it's empty
-                updatedItem = Item(args.currentItem.id, args.currentItem.qrName, name, amount.toString().toDouble(), min.toString().toDouble(), "-")
+                updatedItem = Item (
+                    args.currentItem.id,
+                    args.currentItem.qrName,
+                    name, amount.toString().toDouble(),
+                    min.toString().toDouble(),
+                    "-" )
             } else {
-                updatedItem = Item(args.currentItem.id, args.currentItem.qrName, name, amount.toString().toDouble(), min.toString().toDouble(), optionalData)
+                updatedItem = Item (
+                    args.currentItem.id,
+                    args.currentItem.qrName,
+                    name, amount.toString().toDouble(),
+                    min.toString().toDouble(),
+                    optionalData )
             }
 
             // Update current item
             mItemViewModel.updateItem(updatedItem)
             Toast.makeText(requireContext(), "Succesfully updated", Toast.LENGTH_SHORT).show()
             // Navigate back to list fragment
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            //findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            findNavController().popBackStack()
         // Inputcheck returned false, toast depending on error code
         } else if (errorCode == 1) {
             Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()

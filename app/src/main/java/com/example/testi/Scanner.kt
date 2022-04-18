@@ -10,20 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import java.util.*
 
-/* Todennäkösesti turha luokka. Nyt testaamiseen  kyätetty
+/*
+    Probably not used in end product. Now used for testing
  */
 class Scanner {
-
+    val TAG = "on_juttuset"
     val scanned = Vector<String>()
-
 
     fun insert (elem : String) {
         scanned.addElement(elem)
-        //Log.d("on_juttuset",scanned.size.toString())
+        //Log.d(TAG,scanned.size.toString())
     }
 
     fun getItems (): Vector<String> {
-        //Log.d("on_juttuset","size " + scanned.size.toString())
+        //Log.d(TAG,"size " + scanned.size.toString())
         return scanned
     }
 }
